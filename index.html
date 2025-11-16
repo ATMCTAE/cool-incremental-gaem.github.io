@@ -1,20 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
- <h1><center> test 2.1 (man i fixed 1 LETTER) </center></h1>
+    <title>Test 2.2</title>
 </head>
 <body>
 
-	<h2 id="points">0</h2>
-	<button onclick="addPoint()">+1 point</button>
+<h1 style="text-align:center;">Test 2.2 (Imma do tests in decimals otherwise imma be at test like 55 by alpha [im still learning so i suck])</h1>
+
+<h2>Points: <span id="points">0</span></h2>
+<button onclick="addPoint()">+</button>
+<button onclick="upgrade1()">Upgrade 1 (-10 points, +1 ppc)</button>
 
 <script>
-	let score = 0;
+let score = 0;
+let ppc = 1; // points per click
 
-	function addPoint()  {
-		score++;
-		document.getElementById("points").innerText = score;
-	}
+function addPoint() {
+    score += ppc; // add points per click
+    document.getElementById("points").innerText = score;
+}
+
+function upgrade1() {
+    if (score >= 10) {      // check if enough points
+        score -= 10;         // pay 10 points
+        ppc += 1;            // increase points per click
+        document.getElementById("points").innerText = score; // update display
+    } else {
+        alert("Not enough points!");
+    }
+}
 </script>
 
 </body>
