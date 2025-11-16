@@ -1,8 +1,21 @@
 <!DOCTYPE html>
 <html>
+<head>
+ <h1><center> test 2 </center></h1>
+</head>
 <body>
 
-      <h1><center> test 1 </center></h1>
+	<h2 id="points">0</h2>
+	<button onclick="addPoint()">Add Point</button>
+
+<script>
+	let score = 0;
+
+	function addPoint()  {
+		score++;
+		document.getElementById("points").innerText = score;
+	}
+</script>
 
 </body>
 </html>
