@@ -13,7 +13,7 @@
 <button onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
 <button id="upgrade2" style="display:none"> Upgrade 2 </button>
 <div class="container">
-  <button class="bottom-button" onclick="AddUpgrade2">Unlocks Upgrade 2 (5000 points)</button>
+  <button class="bottom-button" onclick="AddUpgrade2()">Unlocks Upgrade 2 (5000 points)</button>
 </div>
 
 <style>
@@ -36,7 +36,7 @@ html, body {
 </style>
 
 <script>
-let score = 5000;
+let score = 0;
 let ppc = 1; // points per click
 
 function addPoint() {
@@ -56,12 +56,13 @@ function AddUpgrade2()	{
 	if (score >=5000) {
 		score-=5000;
 		 document.getElementById("upgrade2").style.display = "block";
-		{
-			{	
+	}
+}
 </script>
 
 </body>
 </html>
+
 
 
 
