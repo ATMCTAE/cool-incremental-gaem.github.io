@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test 2.2.3</title>
+    <title>Test 3</title>
 </head>
 <body>
 
-<h1 style="text-align:center;">Test 2.2.3 (Imma do tests in decimals otherwise imma be at test like 55 by alpha [im still learning so i suck])</h1>
+<h1 style="text-align:center;">Test 3</h1>
 
 <h2>Points: <span id="points">0</span></h2>
 <h2>Points per click (ppc): <span id="ppc">1</span></h2>
@@ -13,7 +13,7 @@
 <button onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
 <button id="upgrade2" style="display:none"> Upgrade 2 </button>
 <div class="container">
-  <button class="bottom-button">Unlocks Upgrade 2 (5000 points)</button>
+  <button class="bottom-button" onclick="AddUpgrade2">Unlocks Upgrade 2 (5000 points)</button>
 </div>
 
 <style>
@@ -36,7 +36,7 @@ html, body {
 </style>
 
 <script>
-let score = 0;
+let score = 5000;
 let ppc = 1; // points per click
 
 function addPoint() {
@@ -56,11 +56,13 @@ function AddUpgrade2()	{
 	if (score >=5000) {
 		score-=5000;
 		 document.getElementById("upgrade2").style.display = "block";
-		
+		{
+			{	
 </script>
 
 </body>
 </html>
+
 
 
 
