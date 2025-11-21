@@ -9,9 +9,10 @@
 
 <h2>Points: <span id="points">0</span></h2>
 <h2>Points per click (ppc): <span id="ppc">1</span></h2>
+<h2>Points per points per click (Ppc): <span id="Ppc">1</span></h2>
 <button onclick="addPoint()">starter point button (will become useless to click in midgame-lategame)</button>
 <button onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
-<button id="upgrade2" style="display:none"> Upgrade 2 </button>
+<button id="upgrade2" style="display:none" onclick="upgrade2()"> Upgrade 2 </button>
 <div class="container">
   <button class="bottom-button" onclick="AddUpgrade2()">Unlocks Upgrade 2 (5000 points)</button>
 </div>
@@ -38,6 +39,7 @@ html, body {
 <script>
 let score = 0;
 let ppc = 1; // points per click
+let Ppc = 1; // points per points per click
 
 function addPoint() {
     score += ppc; // add points per click
@@ -47,21 +49,28 @@ function addPoint() {
 function upgrade1() {
     if (score >= 40) {      // check if enough points
         score -= 40;         // pay 10 points
-        ppc += 1;            // increase points per click
+        ppc += Ppc;            // increase points per click
         document.getElementById("points").innerText = score; // update display
 	document.getElementById("ppc").innerText = ppc;
     }
 }
 function AddUpgrade2()	{
-	if (score >=5000) {
-		score-=5000;
+	if (score >= 5000) {
+		score -= 5000;
 		 document.getElementById("upgrade2").style.display = "block";
+		
 	}
 }
+function upgrade2()	{
+	if (score >= 2500) {
+		score -= 2500;
+		Ppc += 2;
+		document.getElementById("Ppc").innerText = Ppc;
 </script>
 
 </body>
 </html>
+
 
 
 
