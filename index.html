@@ -11,6 +11,30 @@
 <h2>Points per click (ppc): <span id="ppc">1</span></h2>
 <button onclick="addPoint()">starter point button (will become useless to click in midgame-lategame)</button>
 <button onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
+<div class="container">
+  <p>Your page content here...</p>
+
+  <button class="bottom-button">Click Me</button>
+</div>
+
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottom-button {
+  margin-top: auto;   /* pushes button to bottom */
+  padding: 10px 20px;
+  font-size: 16px;
+}
+</style>
 
 <script>
 let score = 0;
@@ -33,3 +57,4 @@ function upgrade1() {
 
 </body>
 </html>
+
