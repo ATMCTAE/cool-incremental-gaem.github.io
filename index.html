@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test 4.1</title>
+    <title>Test 5</title>
 
 <style>
-#phone,
-#pc {
-    display: none;
-}
-
 html, body {
     height: 100%;
     margin: 0;
@@ -30,7 +25,8 @@ html, body {
 #pointsDisplay,
 #ppcDisplay,
 #PpcDisplay,
-#cpsDisplay {
+#cpsDisplay,
+button:not(#phone):not(#pc) {
     display: none;
 }
 </style>
@@ -38,19 +34,19 @@ html, body {
 </head>
 <body>
 
-<h1 style="text-align:center;">Test 4.1</h1>
+<h1 style="text-align:center;">Test 5</h1>
 
 <h2 id="pointsDisplay">Points: <span id="points">0</span></h2>
 <h2 id="ppcDisplay">Points per click (ppc): <span id="ppc">1</span></h2>
 <h2 id="PpcDisplay">Points per points per click (Ppc): <span id="Ppc">1</span></h2>
 <h2 id="cpsDisplay">Clicks per second (cps): <span id="cps">0</span></h2>
 
-<button onclick="addPoint()" style="display:none">starter point button</button>
-<button onclick="upgrade1()" style="display:none">Upgrade 1 (-40 points, +1 ppc)</button>
-<button id="upgrade2" style="display:none" onclick="upgrade2()"> -2500 points, +2 Ppc </button>
-<button id="upgrade3" style="display:none" onclick="upgrade3()"> -50000 points, +2000 cps </button>
-<button id="phone" onclick="phone()"> PHONE SETTINGS </button>
-<button id="pc" onclick="pc()"> PC SETTINGS </button>
+<button onclick="addPoint()">starter point button</button>
+<button onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
+<button id="upgrade2" onclick="upgrade2()"> -2500 points, +2 Ppc </button>
+<button id="upgrade3" onclick="upgrade3()"> -50000 points, +2000 cps </button>
+<button id="phone" onclick="phone()">PHONE SETTINGS</button>
+<button id="pc" onclick="pc()">PC SETTINGS</button>
 
 <div class="container">
   <button class="bottom-button" onclick="AddUpgrade2()">Unlocks Upgrade 2 (5000 points)</button>
@@ -65,6 +61,29 @@ let score = 0;
 let ppc = 1; 
 let Ppc = 1; 
 let cps = 0; 
+
+hideEverything();
+
+function hideEverything() {
+    document.querySelectorAll("button:not(#phone):not(#pc)").forEach(btn => {
+        btn.style.display = "none";
+    });
+    document.querySelectorAll("h2").forEach(h2 => {
+        h2.style.display = "none";
+    });
+}
+
+function showEverything() {
+    document.querySelectorAll("button").forEach(btn => {
+        btn.style.display = "block";
+    });
+    document.querySelectorAll("h2").forEach(h2 => {
+        h2.style.display = "block";
+    });
+
+    document.getElementById("phone").style.display = "none";
+    document.getElementById("pc").style.display = "none";
+}
 
 function addPoint() {
     score += ppc;
@@ -122,6 +141,7 @@ setInterval(() => {
 }, 500);
 
 function phone() {
+    showEverything();
     document.body.style.fontSize = "35px";
     document.querySelectorAll("button").forEach(btn => {
         btn.style.fontSize = "35px";
@@ -130,6 +150,7 @@ function phone() {
 }
 
 function pc() {
+    showEverything();
     document.body.style.fontSize = "16px";
     document.querySelectorAll("button").forEach(btn => {
         btn.style.fontSize = "16px";
