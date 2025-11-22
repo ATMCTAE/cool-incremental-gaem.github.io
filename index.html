@@ -1,92 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test 6</title>
+    <title>Test 4.2</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            font-family: sans-serif;
+        }
 
-<style>
-html, body {
-    height: 100%;
-    margin: 0;
-}
+        h1 { text-align: center; }
 
-.container {
-    min-height: 100%;
-    display: flex;
-    flex-direction: column;
-}
+        #pointsDisplay, #ppcDisplay, #PpcDisplay, #cpsDisplay,
+        #addPoint, #upgrade1, #upgrade2, #upgrade3, #line {
+            display: none;
+        }
 
-.bottom-button {
-    margin-top: auto;
-    margin-bottom: 50px;
-    padding: 10px 20px;
-    font-size: 16px;
-}
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
 
-#pointsDisplay,
-#ppcDisplay,
-#PpcDisplay,
-#cpsDisplay {
-    display: none;
-}
+        .bottom-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            position: relative;
+        }
 
-.upgrade-tree {
-    position: relative;
-    width: 300px;
-    margin: 0 auto;
-    margin-top: 40px;
-}
+        #upgrade2Container, #upgrade3Container {
+            position: relative;
+        }
 
-.upgrade-btn {
-    display: block;
-    width: 100%;
-    padding: 10px 20px;
-    font-size: 16px;
-    margin-bottom: 40px;
-}
+        #line {
+            width: 2px;
+            height: 100px;
+            border-left: 2px solid black;
+            transform: rotate(-30deg);
+            position: absolute;
+            top: 0;
+            left: 50%;
+            z-index: -1;
+        }
 
-.slanted-line {
-    width: 4px;
-    height: 120px;
-    background: black;
-    position: absolute;
-    top: 40px;
-    left: 70%;
-    transform: rotate(35deg);
-    border-radius: 2px;
-}
-</style>
-
+        #upgrade3Container {
+            align-self: flex-start;
+            margin-left: 50px;
+        }
+    </style>
 </head>
 <body>
 
-<h1 style="text-align:center;">Test 6</h1>
+<h1>Test 4.2</h1>
 
 <h2 id="pointsDisplay">Points: <span id="points">0</span></h2>
 <h2 id="ppcDisplay">Points per click (ppc): <span id="ppc">1</span></h2>
 <h2 id="PpcDisplay">Points per points per click (Ppc): <span id="Ppc">1</span></h2>
 <h2 id="cpsDisplay">Clicks per second (cps): <span id="cps">0</span></h2>
 
-<button onclick="addPoint()" style="display:none">starter point button</button>
-<button onclick="upgrade1()" style="display:none">Upgrade 1 (-40 points, +1 ppc)</button>
+<button id="addPoint" onclick="addPoint()">Starter Point Button</button>
+<button id="upgrade1" onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
+<button id="upgrade2" onclick="upgrade2()">Upgrade 2 (-2500 points, +2 Ppc)</button>
+<button id="upgrade3" onclick="upgrade3()">Upgrade 3 (-50000 points, +2000 cps)</button>
 
-<button id="upgrade2" style="display:none" onclick="upgrade2()"> -2500 points, +2 Ppc </button>
-<button id="upgrade3" style="display:none" onclick="upgrade3()"> -50000 points, +2000 cps </button>
+<div>
+    <button id="phone" onclick="phone()">PHONE SETTINGS</button>
+    <button id="pc" onclick="pc()">PC SETTINGS</button>
+</div>
 
-<button id="phone" onclick="phone()"> PHONE SETTINGS </button>
-<button id="pc" onclick="pc()"> PC SETTINGS </button>
-
-<div class="upgrade-tree">
-    <button class="upgrade-btn" onclick="AddUpgrade2()">Unlocks Upgrade 2 (5000 points)</button>
-
-    <div class="slanted-line"></div>
-
-    <button class="upgrade-btn" onclick="AddUpgrade3()">Unlocks Upgrade 3 (100000 points)</button>
+<div class="container">
+    <div id="upgrade2Container">
+        <button class="bottom-button" onclick="AddUpgrade2()">Unlock Upgrade 2 (5000 points)</button>
+    </div>
+    <div id="line"></div>
+    <div id="upgrade3Container">
+        <button class="bottom-button" onclick="AddUpgrade3()">Unlock Upgrade 3 (100000 points)</button>
+    </div>
 </div>
 
 <script>
 let score = 0;
-let ppc = 1;
-let Ppc = 1;
+let ppc = 1; 
+let Ppc = 1; 
 let cps = 0;
 
 function addPoint() {
@@ -106,7 +103,7 @@ function upgrade1() {
 function AddUpgrade2() {
     if (score >= 5000) {
         score -= 5000;
-        document.getElementById("upgrade2").style.display = "block";
+        document.getElementById("upgrade2").style.display = "inline-block";
         document.getElementById("points").innerText = score;
     }
 }
@@ -123,7 +120,7 @@ function upgrade2() {
 function AddUpgrade3() {
     if (score >= 100000) {
         score -= 100000;
-        document.getElementById("upgrade3").style.display = "block";
+        document.getElementById("upgrade3").style.display = "inline-block";
         document.getElementById("points").innerText = score;
     }
 }
@@ -144,45 +141,30 @@ setInterval(() => {
     }
 }, 500);
 
-
-hideEverything();
-
-function hideEverything() {
-    document.querySelectorAll("button:not(#phone):not(#pc)").forEach(btn => {
-        btn.style.display = "none";
-    });
-    document.querySelectorAll("h2").forEach(h2 => {
-        h2.style.display = "none";
-    });
-}
-
-function showEverything() {
-    document.querySelectorAll("button").forEach(btn => {
-        btn.style.display = "block";
-    });
-    document.querySelectorAll("h2").forEach(h2 => {
-        h2.style.display = "block";
-    });
-    document.getElementById("phone").style.display = "none";
-    document.getElementById("pc").style.display = "none";
-}
-
 function phone() {
-    showEverything();
-    document.body.style.fontSize = "35px";
-    document.querySelectorAll("button").forEach(btn => {
-        btn.style.fontSize = "35px";
-        btn.style.padding = "25px 50px";
-    });
+    showAll(35, "25px 50px");
 }
 
 function pc() {
-    showEverything();
-    document.body.style.fontSize = "16px";
-    document.querySelectorAll("button").forEach(btn => {
-        btn.style.fontSize = "16px";
-        btn.style.padding = "10px 20px";
+    showAll(16, "10px 20px");
+}
+
+function showAll(fontSize, padding) {
+    // Show all stats and hidden buttons
+    ["pointsDisplay","ppcDisplay","PpcDisplay","cpsDisplay",
+     "addPoint","upgrade1","upgrade2","upgrade3","line"].forEach(id => {
+        let el = document.getElementById(id);
+        if(el) el.style.display = "block";
     });
+
+    document.querySelectorAll("button").forEach(btn => {
+        btn.style.fontSize = fontSize + "px";
+        btn.style.padding = padding;
+    });
+
+    // Hide settings buttons
+    document.getElementById("phone").style.display = "none";
+    document.getElementById("pc").style.display = "none";
 }
 </script>
 
