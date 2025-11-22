@@ -13,7 +13,7 @@
 
         /* initially hidden elements */
         #pointsDisplay, #ppcDisplay, #PpcDisplay, #cpsDisplay,
-        #addPoint, #upgrade1, 
+        #addPoint, #upgrade1, #upgrade2, #upgrade3,
         #upgrade2Container, #upgrade3Container, #line {
             display: none;
         }
@@ -157,7 +157,7 @@ function pc() {
 function showAll(fontSize, padding) {
     // Show stats, buttons, upgrade tree and line
     ["pointsDisplay","ppcDisplay","PpcDisplay","cpsDisplay",
-     "addPoint","upgrade1",
+     "addPoint","upgrade1", "upgrade2", "upgrade3",
      "upgrade2Container","upgrade3Container","line"].forEach(id => {
         let el = document.getElementById(id);
         if(el) el.style.display = "block";
@@ -175,4 +175,5 @@ function showAll(fontSize, padding) {
 
 </body>
 </html>
+
 
