@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test 4.4</title>
+    <title>Test 4.5</title>
     <style>
         html, body {
             height: 100%;
@@ -11,43 +11,46 @@
 
         h1 { text-align: center; }
 
+        /* initially hidden elements */
         #pointsDisplay, #ppcDisplay, #PpcDisplay, #cpsDisplay,
-        #addPoint, #upgrade1, #upgrade2, #upgrade3, 
+        #addPoint, #upgrade1, 
         #upgrade2Container, #upgrade3Container, #line {
             display: none;
         }
 
         .container {
             position: relative;
-            height: 600px; /* enough space for 500px gap */
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 700px; /* enough vertical space for spacing */
         }
 
         .bottom-button {
             padding: 10px 20px;
             font-size: 16px;
-            position: absolute;
         }
 
         #upgrade2Container {
-            top: 50px; 
-            left: 50%;
-            transform: translateX(-50%);
+            margin-top: 50px;
+            text-align: center;
         }
 
         #upgrade3Container {
-            top: 550px; /* ~500px below Upgrade 2 */
-            left: 50px; /* left aligned */
+            margin-top: 500px; /* 500px below Upgrade 2 */
+            align-self: flex-start; /* left align */
+            margin-left: 50px; 
         }
 
         #line {
             width: 2px;
             height: 500px;
             border-left: 2px solid black;
-            transform: rotate(-30deg);
             position: absolute;
-            top: 50px;
-            left: 50%;
+            top: 50px; /* starts at Upgrade 2 */
+            left: 50%;  /* center of Upgrade 2 */
+            transform: rotate(-30deg);
             transform-origin: top left;
             z-index: -1;
         }
@@ -55,7 +58,7 @@
 </head>
 <body>
 
-<h1>Test 4.4</h1>
+<h1>Test 4.5</h1>
 
 <h2 id="pointsDisplay">Points: <span id="points">0</span></h2>
 <h2 id="ppcDisplay">Points per click (ppc): <span id="ppc">1</span></h2>
@@ -152,6 +155,7 @@ function pc() {
 }
 
 function showAll(fontSize, padding) {
+    // Show stats, buttons, upgrade tree and line
     ["pointsDisplay","ppcDisplay","PpcDisplay","cpsDisplay",
      "addPoint","upgrade1",
      "upgrade2Container","upgrade3Container","line"].forEach(id => {
