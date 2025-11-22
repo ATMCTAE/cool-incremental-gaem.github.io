@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test 5.1</title>
+    <title>Test 6</title>
 
 <style>
 html, body {
@@ -14,10 +14,10 @@ html, body {
     display: flex;
     flex-direction: column;
 }
-    
+
 .bottom-button {
-    margin-top: 0;
-    margin-bottom: 100px;
+    margin-top: auto;
+    margin-bottom: 50px;
     padding: 10px 20px;
     font-size: 16px;
 }
@@ -25,69 +25,69 @@ html, body {
 #pointsDisplay,
 #ppcDisplay,
 #PpcDisplay,
-#cpsDisplay,
-button:not(#phone):not(#pc) {
+#cpsDisplay {
     display: none;
 }
-#upgrade3 {
-    width: 50%;
-    align-self: flex-start;
+
+.upgrade-tree {
+    position: relative;
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+
+.upgrade-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+
+.slanted-line {
+    width: 4px;
+    height: 120px;
+    background: black;
+    position: absolute;
+    top: 40px;
+    left: 70%;
+    transform: rotate(35deg);
+    border-radius: 2px;
 }
 </style>
 
 </head>
 <body>
 
-<h1 style="text-align:center;">Test 5.1</h1>
+<h1 style="text-align:center;">Test 6</h1>
 
 <h2 id="pointsDisplay">Points: <span id="points">0</span></h2>
 <h2 id="ppcDisplay">Points per click (ppc): <span id="ppc">1</span></h2>
 <h2 id="PpcDisplay">Points per points per click (Ppc): <span id="Ppc">1</span></h2>
 <h2 id="cpsDisplay">Clicks per second (cps): <span id="cps">0</span></h2>
 
-<button onclick="addPoint()">starter point button</button>
-<button onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
-<button id="upgrade2" onclick="upgrade2()"> -2500 points, +2 Ppc </button>
-<button id="upgrade3" onclick="upgrade3()"> -50000 points, +2000 cps </button>
-<button id="phone" onclick="phone()">PHONE SETTINGS</button>
-<button id="pc" onclick="pc()">PC SETTINGS</button>
+<button onclick="addPoint()" style="display:none">starter point button</button>
+<button onclick="upgrade1()" style="display:none">Upgrade 1 (-40 points, +1 ppc)</button>
 
-<div class="container">
-  <button class="bottom-button" onclick="AddUpgrade2()">Unlocks Upgrade 2 (5000 points)</button>
-</div>
+<button id="upgrade2" style="display:none" onclick="upgrade2()"> -2500 points, +2 Ppc </button>
+<button id="upgrade3" style="display:none" onclick="upgrade3()"> -50000 points, +2000 cps </button>
 
-<div class="container">
-  <button class="bottom-button" onclick="AddUpgrade3()">Unlocks Upgrade 3 (100000 points)</button>
+<button id="phone" onclick="phone()"> PHONE SETTINGS </button>
+<button id="pc" onclick="pc()"> PC SETTINGS </button>
+
+<div class="upgrade-tree">
+    <button class="upgrade-btn" onclick="AddUpgrade2()">Unlocks Upgrade 2 (5000 points)</button>
+
+    <div class="slanted-line"></div>
+
+    <button class="upgrade-btn" onclick="AddUpgrade3()">Unlocks Upgrade 3 (100000 points)</button>
 </div>
 
 <script>
 let score = 0;
-let ppc = 1; 
-let Ppc = 1; 
-let cps = 0; 
-
-hideEverything();
-
-function hideEverything() {
-    document.querySelectorAll("button:not(#phone):not(#pc)").forEach(btn => {
-        btn.style.display = "none";
-    });
-    document.querySelectorAll("h2").forEach(h2 => {
-        h2.style.display = "none";
-    });
-}
-
-function showEverything() {
-    document.querySelectorAll("button").forEach(btn => {
-        btn.style.display = "block";
-    });
-    document.querySelectorAll("h2").forEach(h2 => {
-        h2.style.display = "block";
-    });
-
-    document.getElementById("phone").style.display = "none";
-    document.getElementById("pc").style.display = "none";
-}
+let ppc = 1;
+let Ppc = 1;
+let cps = 0;
 
 function addPoint() {
     score += ppc;
@@ -144,6 +144,29 @@ setInterval(() => {
     }
 }, 500);
 
+
+hideEverything();
+
+function hideEverything() {
+    document.querySelectorAll("button:not(#phone):not(#pc)").forEach(btn => {
+        btn.style.display = "none";
+    });
+    document.querySelectorAll("h2").forEach(h2 => {
+        h2.style.display = "none";
+    });
+}
+
+function showEverything() {
+    document.querySelectorAll("button").forEach(btn => {
+        btn.style.display = "block";
+    });
+    document.querySelectorAll("h2").forEach(h2 => {
+        h2.style.display = "block";
+    });
+    document.getElementById("phone").style.display = "none";
+    document.getElementById("pc").style.display = "none";
+}
+
 function phone() {
     showEverything();
     document.body.style.fontSize = "35px";
@@ -165,4 +188,3 @@ function pc() {
 
 </body>
 </html>
-
