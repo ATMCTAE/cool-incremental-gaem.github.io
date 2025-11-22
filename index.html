@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test 4.2</title>
+    <title>Test 4.3</title>
     <style>
         html, body {
             height: 100%;
@@ -12,15 +12,17 @@
         h1 { text-align: center; }
 
         #pointsDisplay, #ppcDisplay, #PpcDisplay, #cpsDisplay,
-        #addPoint, #upgrade1, #upgrade2, #upgrade3, #line {
+        #addPoint, #upgrade1, #upgrade2, #upgrade3, 
+        #upgrade2Container, #upgrade3Container, #line {
             display: none;
         }
 
         .container {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            margin-top: 20px;
+            align-items: flex-start;
+            margin-top: 50px;
+            position: relative;
         }
 
         .bottom-button {
@@ -30,30 +32,25 @@
             position: relative;
         }
 
-        #upgrade2Container, #upgrade3Container {
-            position: relative;
-        }
-
         #line {
             width: 2px;
-            height: 100px;
+            height: 150px;
             border-left: 2px solid black;
             transform: rotate(-30deg);
             position: absolute;
             top: 0;
-            left: 50%;
+            left: 60px; /* Adjust to start near top-left */
             z-index: -1;
         }
 
         #upgrade3Container {
-            align-self: flex-start;
             margin-left: 50px;
         }
     </style>
 </head>
 <body>
 
-<h1>Test 4.2</h1>
+<h1>Test 4.3</h1>
 
 <h2 id="pointsDisplay">Points: <span id="points">0</span></h2>
 <h2 id="ppcDisplay">Points per click (ppc): <span id="ppc">1</span></h2>
@@ -150,9 +147,9 @@ function pc() {
 }
 
 function showAll(fontSize, padding) {
-    // Show all stats and hidden buttons
     ["pointsDisplay","ppcDisplay","PpcDisplay","cpsDisplay",
-     "addPoint","upgrade1","upgrade2","upgrade3","line"].forEach(id => {
+     "addPoint","upgrade1",
+     "upgrade2Container","upgrade3Container","line"].forEach(id => {
         let el = document.getElementById(id);
         if(el) el.style.display = "block";
     });
@@ -162,7 +159,6 @@ function showAll(fontSize, padding) {
         btn.style.padding = padding;
     });
 
-    // Hide settings buttons
     document.getElementById("phone").style.display = "none";
     document.getElementById("pc").style.display = "none";
 }
