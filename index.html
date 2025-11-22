@@ -1,25 +1,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test 3</title>
+    <title>Test 4.1</title>
 </head>
 <body>
 
-<h1 style="text-align:center;">Test 3</h1>
+<h1 style="text-align:center;">Test 4.1</h1>
 
-<h2>Points: <span id="points">0</span></h2>
-<h2>Points per click (ppc): <span id="ppc">1</span></h2>
-<h2>Points per points per click (Ppc): <span id="Ppc">1</span></h2>
-<h2>Clicks per second (cps): <span id="cps">0</span></h2>
-<button onclick="addPoint()">starter point button (will become useless to click in midgame-lategame)</button>
-<button onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
+<h2 id="pointsDisplay">Points: <span id="points">0</span></h2>
+<h2 id="ppcDisplay">Points per click (ppc): <span id="ppc">1</span></h2>
+<h2 id="PpcDisplay">Points per points per click (Ppc): <span id="Ppc">1</span></h2>
+<h2 id="cpsDisplay">Clicks per second (cps): <span id="cps">0</span></h2>
+
+<button onclick="addPoint()" style="display:none">starter point button</button>
+<button onclick="upgrade1()" style="display:none">Upgrade 1 (-40 points, +1 ppc)</button>
 <button id="upgrade2" style="display:none" onclick="upgrade2()"> -2500 points, +2 Ppc </button>
 <button id="upgrade3" style="display:none" onclick="upgrade3()"> -50000 points, +2000 cps </button>
+<button id="phone" onclick="phone()"> PHONE SETTINGS </button>
+<button id="pc" onclick="pc()"> PC SETTINGS </button>
+
 <div class="container">
   <button class="bottom-button" onclick="AddUpgrade2()">Unlocks Upgrade 2 (5000 points)</button>
 </div>
 
 <style>
+#pointsDisplay,
+#ppcDisplay,
+#PpcDisplay,
+#cpsDisplay {
+    display: none;
+}
+
 html, body {
   height: 100%;
   margin: 0;
@@ -32,97 +43,95 @@ html, body {
 }
 
 .bottom-button {
-  margin-top: auto;   /* pushes button to bottom */
+  margin-top: auto;
   padding: 10px 20px;
   font-size: 16px;
 }
 </style>
+
 <div class="container">
   <button class="bottom-button" onclick="AddUpgrade3()">Unlocks Upgrade 3 (100000 points)</button>
 </div>
 
-<style>
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-.container {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.bottom-button {
-  margin-bottom: 50px;   /* pushes button to bottom */
-  padding: 10px 20px;
-  font-size: 16px;
-}
-</style>
 <script>
-	
+
 let score = 0;
-let ppc = 1; // points per click
-let Ppc = 1; // points per points per click
-let cps = 0; // auto clicks per second
+let ppc = 1; 
+let Ppc = 1; 
+let cps = 0; 
 
 function addPoint() {
-    score += ppc; // add points per click
+    score += ppc;
     document.getElementById("points").innerText = score;
 }
 
 function upgrade1() {
-    if (score >= 40) {      // check if enough points
-        score -= 40;         // pay 10 points
-        ppc += Ppc;            // increase points per click
-        document.getElementById("points").innerText = score; // update display
-	document.getElementById("ppc").innerText = ppc;
+    if (score >= 40) {
+        score -= 40;
+        ppc += Ppc;
+        document.getElementById("points").innerText = score;
+        document.getElementById("ppc").innerText = ppc;
     }
 }
-function AddUpgrade2()	{
-	if (score >= 5000) {
-		score -= 5000;
-		 document.getElementById("upgrade2").style.display = "block";
-		document.getElementById("points").innerText = score; // update display
-		
-	}
+
+function AddUpgrade2() {
+    if (score >= 5000) {
+        score -= 5000;
+        document.getElementById("upgrade2").style.display = "block";
+        document.getElementById("points").innerText = score;
+    }
 }
-function upgrade2()	{
-	if (score >= 2500) {
-		score -= 2500; 
-		Ppc += 2;
-		document.getElementById("Ppc").innerText = Ppc;
-		document.getElementById("points").innerText = score; // update display
-	}
+
+function upgrade2() {
+    if (score >= 2500) {
+        score -= 2500;
+        Ppc += 2;
+        document.getElementById("Ppc").innerText = Ppc;
+        document.getElementById("points").innerText = score;
+    }
 }
+
 function AddUpgrade3() {
-	if (score >= 100000) {
-		score -=100000;
-		 document.getElementById("upgrade3").style.display = "block";
-		document.getElementById("points").innerText = score; // update display
-	}
+    if (score >= 100000) {
+        score -= 100000;
+        document.getElementById("upgrade3").style.display = "block";
+        document.getElementById("points").innerText = score;
+    }
 }
+
 function upgrade3() {
-	if (score >= 50000)	{
-		score -= 50000; 
-		cps += 2000;
-		document.getElementById("cps").innerText = cps;
-		document.getElementById("points").innerText = score; // update display
-		}
+    if (score >= 50000) {
+        score -= 50000;
+        cps += 2000;
+        document.getElementById("cps").innerText = cps;
+        document.getElementById("points").innerText = score;
+    }
 }
-	setInterval(() => {
-    score += cps;
-    document.getElementById("points").textContent = score;
-  }, (1000 * cps) / 2000); // 1000 ms = 1 second
+
+setInterval(() => {
+    if (cps > 0) {
+        score += cps;
+        document.getElementById("points").textContent = score;
+    }
+}, 500); // fixed for reliability
+
+function phone() {
+    document.body.style.fontSize = "35px";
+    document.querySelectorAll("button").forEach(btn => {
+        btn.style.fontSize = "35px";
+        btn.style.padding = "25px 50px";
+    });
+}
+
+function pc() {
+    document.body.style.fontSize = "16px";
+    document.querySelectorAll("button").forEach(btn => {
+        btn.style.fontSize = "16px";
+        btn.style.padding = "10px 20px";
+    });
+}
+
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
