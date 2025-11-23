@@ -14,62 +14,66 @@
         /* initially hidden elements */
         #pointsDisplay, #ppcDisplay, #PpcDisplay, #cpsDisplay,
         #addPoint, #upgrade1, #upgrade2, #upgrade3, #upgrade4,
-        #upgrade2Container, #upgrade3Container, #line, #line2 {
+        #upgrade2Container, #upgrade3Container, #upgradeLeft,
+        #lineLeft, #lineRight {
             display: none;
         }
 
         .container {
             position: relative;
             width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 700px;
+            height: 650px;
         }
 
-        .bottom-button {
-            padding: 10px 20px;
-            font-size: 16px;
-        }
+        /* === UPGRADE TREE LAYOUT FIXED === */
 
+        /* Upgrade 2 (Top Node) */
         #upgrade2Container {
-            margin-top: 50px;
-            text-align: center;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        #upgrade3Container {
-            margin-top: 380px;
-            align-self: flex-start;
-            margin-left: 850px; 
-        }
-        #upgrade4 {
-            margin-top: 380px;
-            align-self: flex-start;
-            margin-left: 300px;
-        }
-        
-        #line {
-            width: 5px;
-            height: 490px;
-            border-left: 2px solid black;
+        /* Left diagonal line */
+        #lineLeft {
             position: absolute;
-            top: 50px;
+            top: 120px;
             left: 50%;
-            transform: rotate(-30deg);
-            transform-origin: top left;
-            z-index: -1;
-        }
-        #line2 {
-            width: 5px;
-            height: 490px;
-            border-left: 2px solid black;
-            position: absolute;
-            top: 50px;
-            left: 50%;
+            width: 3px;
+            height: 350px;
+            background: black;
             transform: rotate(30deg);
-            transform-origin: top left;
-            z-index: -1;
+            transform-origin: top;
         }
+
+        /* Right diagonal line */
+        #lineRight {
+            position: absolute;
+            top: 120px;
+            left: 50%;
+            width: 3px;
+            height: 350px;
+            background: black;
+            transform: rotate(-30deg);
+            transform-origin: top;
+        }
+
+        /* Bottom-left upgrade (Upgrade 4) */
+        #upgradeLeft {
+            position: absolute;
+            top: 430px;
+            left: calc(50% - 260px);
+            transform: translateX(-50%);
+        }
+
+        /* Bottom-right upgrade (Upgrade 3) */
+        #upgrade3Container {
+            position: absolute;
+            top: 430px;
+            left: calc(50% + 260px);
+            transform: translateX(-50%);  
+}
     </style>
 </head>
 <body>
@@ -85,7 +89,11 @@
 <button id="upgrade1" onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
 <button id="upgrade2" onclick="upgrade2()">Upgrade 2 (-2500 points, +2 Ppc)</button>
 <button id="upgrade3" onclick="upgrade3()">Upgrade 3 (-50000 points, +1 cps)</button>
-<button id="upgrade4" onclick="upgrade4()">Upgrade 4 (-1m points, x100 ppc & x2 cps)</button>
+
+<!-- Upgrade 4 moved to bottom-left -->
+<div id="upgradeLeft">
+    <button id="upgrade4" onclick="upgrade4()">Upgrade 4 (-1m points, x100 ppc & x2 cps)</button>
+</div>
 
 <div>
     <button id="phone" onclick="phone()">PHONE SETTINGS</button>
@@ -93,14 +101,18 @@
 </div>
 
 <div class="container">
+
     <div id="upgrade2Container">
         <button class="bottom-button" onclick="AddUpgrade2()">Unlock Upgrade 2 (5000 points)</button>
     </div>
-    <div id="line"></div>
-    <div id="line2"></div>
+
+    <div id="lineLeft"></div>
+    <div id="lineRight"></div>
+
     <div id="upgrade3Container">
         <button class="bottom-button" onclick="AddUpgrade3()">Unlock Upgrade 3 (100000 points)</button>
     </div>
+
 </div>
 
 <script>
@@ -110,32 +122,11 @@ let Ppc = 1;
 let cps = 0;
 let upgrade4Bought = false;
 
-let cpsInterval = null;
-
-// -------------------------------
-// TRUE CPS CLICK LOOP
-// -------------------------------
-function startCpsLoop() {
-    if (cpsInterval) clearInterval(cpsInterval);
-
-    if (cps > 0) {
-        cpsInterval = setInterval(() => {
-            addPoint(); // real simulated click
-        }, 1000 / cps);
-    }
-}
-
-// -------------------------------
-// BASIC CLICK
-// -------------------------------
 function addPoint() {
     score += ppc;
     document.getElementById("points").innerText = score;
 }
 
-// -------------------------------
-// UPGRADES
-// -------------------------------
 function upgrade1() {
     if (score >= 40) {
         score -= 40;
@@ -176,32 +167,27 @@ function upgrade3() {
         cps += 1;
         document.getElementById("cps").innerText = cps;
         document.getElementById("points").innerText = score;
-        startCpsLoop(); // update CPS interval
     }
 }
 
 function upgrade4() {
     if (upgrade4Bought) return;
-
     if (score >= 1000000) {
         score -= 1000000;
-        ppc = ppc * 100;
-        cps = cps * 2;
+        ppc *= 100;
+        cps *= 2;
         upgrade4Bought = true;
-
         document.getElementById("ppc").innerText = ppc;
         document.getElementById("cps").innerText = cps;
         document.getElementById("points").innerText = score;
-
-        document.getElementById("upgrade4").disabled = true;
-
-        startCpsLoop(); // update CPS interval
     }
 }
 
-// -------------------------------
-// DISPLAY SETTINGS
-// -------------------------------
+setInterval(() => {
+    score += cps * ppc;
+    document.getElementById("points").textContent = score;
+}, 1000);
+
 function phone() {
     showAll(35, "25px 50px");
 }
@@ -214,7 +200,7 @@ function showAll(fontSize, padding) {
     [
         "pointsDisplay","ppcDisplay","PpcDisplay","cpsDisplay",
         "addPoint","upgrade1","upgrade2Container","upgrade3Container",
-        "line","line2","upgrade4"
+        "lineLeft","lineRight","upgrade4","upgradeLeft"
     ].forEach(id => {
         let el = document.getElementById(id);
         if (el) el.style.display = "block";
