@@ -13,8 +13,8 @@
 
         /* initially hidden elements */
         #pointsDisplay, #ppcDisplay, #PpcDisplay, #cpsDisplay,
-        #addPoint, #upgrade1, #upgrade2, #upgrade3,
-        #upgrade2Container, #upgrade3Container, #line {
+        #addPoint, #upgrade1, #upgrade2, #upgrade3, #upgrade4,
+        #upgrade2Container, #upgrade3Container, #line, #line2 {
             display: none;
         }
 
@@ -24,7 +24,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 700px; /* enough vertical space for spacing */
+            height: 700px;
         }
 
         .bottom-button {
@@ -38,19 +38,35 @@
         }
 
         #upgrade3Container {
-            margin-top: 380px; /* 500px below Upgrade 2 */
-            align-self: flex-start; /* left align */
-            margin-left: 1500px; 
+            margin-top: 380px;
+            align-self: flex-start;
+            margin-left: 850px; 
         }
-
+        #upgrade4 {
+            margin-top: 380px;
+            align-self: flex-start;
+            margin-left: 300px;
+        }
+        
         #line {
-            width: 2px;
-            height: 500px;
+            width: 5px;
+            height: 490px;
             border-left: 2px solid black;
             position: absolute;
-            top: 50px; /* starts at Upgrade 2 */
-            left: 50%;  /* center of Upgrade 2 */
+            top: 50px;
+            left: 50%;
             transform: rotate(-30deg);
+            transform-origin: top left;
+            z-index: -1;
+        }
+        #line2 {
+            width: 5px;
+            height: 490px;
+            border-left: 2px solid black;
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: rotate(30deg);
             transform-origin: top left;
             z-index: -1;
         }
@@ -68,7 +84,8 @@
 <button id="addPoint" onclick="addPoint()">Starter Point Button</button>
 <button id="upgrade1" onclick="upgrade1()">Upgrade 1 (-40 points, +1 ppc)</button>
 <button id="upgrade2" onclick="upgrade2()">Upgrade 2 (-2500 points, +2 Ppc)</button>
-<button id="upgrade3" onclick="upgrade3()">Upgrade 3 (-50000 points, +2000 cps)</button>
+<button id="upgrade3" onclick="upgrade3()">Upgrade 3 (-50000 points, +1 cps)</button>
+<button id="upgrade4" onclick="upgrade4()">Upgrade 4 (-1m points, x100 ppc & x2 cps)</button>
 
 <div>
     <button id="phone" onclick="phone()">PHONE SETTINGS</button>
@@ -80,6 +97,7 @@
         <button class="bottom-button" onclick="AddUpgrade2()">Unlock Upgrade 2 (5000 points)</button>
     </div>
     <div id="line"></div>
+    <div id="line2"></div>
     <div id="upgrade3Container">
         <button class="bottom-button" onclick="AddUpgrade3()">Unlock Upgrade 3 (100000 points)</button>
     </div>
@@ -87,15 +105,37 @@
 
 <script>
 let score = 0;
-let ppc = 1; 
-let Ppc = 1; 
+let ppc = 1;
+let Ppc = 1;
 let cps = 0;
+let upgrade4Bought = false;
 
+let cpsInterval = null;
+
+// -------------------------------
+// TRUE CPS CLICK LOOP
+// -------------------------------
+function startCpsLoop() {
+    if (cpsInterval) clearInterval(cpsInterval);
+
+    if (cps > 0) {
+        cpsInterval = setInterval(() => {
+            addPoint(); // real simulated click
+        }, 1000 / cps);
+    }
+}
+
+// -------------------------------
+// BASIC CLICK
+// -------------------------------
 function addPoint() {
     score += ppc;
     document.getElementById("points").innerText = score;
 }
 
+// -------------------------------
+// UPGRADES
+// -------------------------------
 function upgrade1() {
     if (score >= 40) {
         score -= 40;
@@ -133,19 +173,35 @@ function AddUpgrade3() {
 function upgrade3() {
     if (score >= 50000) {
         score -= 50000;
-        cps += 2000;
+        cps += 1;
         document.getElementById("cps").innerText = cps;
         document.getElementById("points").innerText = score;
+        startCpsLoop(); // update CPS interval
     }
 }
 
-setInterval(() => {
-    if (cps > 0) {
-        score += cps;
-        document.getElementById("points").textContent = score;
-    }
-}, 500);
+function upgrade4() {
+    if (upgrade4Bought) return;
 
+    if (score >= 1000000) {
+        score -= 1000000;
+        ppc = ppc * 100;
+        cps = cps * 2;
+        upgrade4Bought = true;
+
+        document.getElementById("ppc").innerText = ppc;
+        document.getElementById("cps").innerText = cps;
+        document.getElementById("points").innerText = score;
+
+        document.getElementById("upgrade4").disabled = true;
+
+        startCpsLoop(); // update CPS interval
+    }
+}
+
+// -------------------------------
+// DISPLAY SETTINGS
+// -------------------------------
 function phone() {
     showAll(35, "25px 50px");
 }
@@ -155,12 +211,13 @@ function pc() {
 }
 
 function showAll(fontSize, padding) {
-    // Show stats, buttons, upgrade tree and line
-    ["pointsDisplay","ppcDisplay","PpcDisplay","cpsDisplay",
-     "addPoint","upgrade1", "upgrade2", "upgrade3",
-     "upgrade2Container","upgrade3Container","line"].forEach(id => {
+    [
+        "pointsDisplay","ppcDisplay","PpcDisplay","cpsDisplay",
+        "addPoint","upgrade1","upgrade2Container","upgrade3Container",
+        "line","line2","upgrade4"
+    ].forEach(id => {
         let el = document.getElementById(id);
-        if(el) el.style.display = "block";
+        if (el) el.style.display = "block";
     });
 
     document.querySelectorAll("button").forEach(btn => {
@@ -175,7 +232,3 @@ function showAll(fontSize, padding) {
 
 </body>
 </html>
-
-
-
-
