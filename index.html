@@ -25,9 +25,7 @@
             height: 650px;
         }
 
-        /* === UPGRADE TREE LAYOUT FIXED === */
-
-        /* Upgrade 2 (Top Node) */
+        /* === DESKTOP (normal) LAYOUT === */
         #upgrade2Container {
             position: absolute;
             top: 50px;
@@ -35,7 +33,6 @@
             transform: translateX(-50%);
         }
 
-        /* Left diagonal line */
         #lineLeft {
             position: absolute;
             top: 120px;
@@ -47,7 +44,6 @@
             transform-origin: top;
         }
 
-        /* Right diagonal line */
         #lineRight {
             position: absolute;
             top: 120px;
@@ -59,21 +55,62 @@
             transform-origin: top;
         }
 
-        /* Bottom-left upgrade (Upgrade 4) */
         #upgradeLeft {
             position: absolute;
-            top: 780px;
+            top: 430px;
             left: calc(50% - 260px);
             transform: translateX(-50%);
         }
 
-        /* Bottom-right upgrade (Upgrade 3) */
         #upgrade3Container {
             position: absolute;
             top: 430px;
             left: calc(50% + 260px);
-            transform: translateX(-50%);  
-}
+            transform: translateX(-50%);
+        }
+
+        /* =====================================
+           📱 MOBILE (Option A: diagonal tree)
+           This keeps your layout but scales
+        ====================================== */
+        @media (max-width: 600px) {
+
+            .container {
+                height: 500px;
+            }
+
+            #upgrade2Container {
+                top: 90px;
+            }
+
+            #lineLeft, #lineRight {
+                top: 150px;
+                height: 45vw;  /* scales with screen width */
+                width: 2px;
+            }
+
+            #lineLeft {
+                left: 50%;
+                transform: rotate(40deg);
+            }
+
+            #lineRight {
+                left: 50%;
+                transform: rotate(-40deg);
+            }
+
+            #upgradeLeft {
+                top: calc(150px + 45vw);
+                left: 20%;
+                transform: translateX(-50%);
+            }
+
+            #upgrade3Container {
+                top: calc(150px + 45vw);
+                left: 80%;
+                transform: translateX(-50%);
+            }
+        }
     </style>
 </head>
 <body>
@@ -90,7 +127,7 @@
 <button id="upgrade2" onclick="upgrade2()">Upgrade 2 (-2500 points, +2 Ppc)</button>
 <button id="upgrade3" onclick="upgrade3()">Upgrade 3 (-50000 points, +1 cps)</button>
 
-<!-- Upgrade 4 moved to bottom-left -->
+<!-- Upgrade 4 bottom-left -->
 <div id="upgradeLeft">
     <button id="upgrade4" onclick="upgrade4()">Upgrade 4 (-1m points, x100 ppc & x2 cps)</button>
 </div>
@@ -218,5 +255,3 @@ function showAll(fontSize, padding) {
 
 </body>
 </html>
-
-
